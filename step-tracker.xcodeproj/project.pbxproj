@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		37AC641A2D58B95F005FDFAC /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 37AC64192D58B95F005FDFAC /* Algorithms */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		37BBD04C2D12E8CE0073B16F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37AC641A2D58B95F005FDFAC /* Algorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = "step-tracker";
 			packageProductDependencies = (
+				37AC64192D58B95F005FDFAC /* Algorithms */,
 			);
 			productName = "step-tracker";
 			productReference = 37BBD03B2D12E8CD0073B16F /* step-tracker.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 37BBD0322D12E8CD0073B16F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				37AC64182D58B95F005FDFAC /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 37BBD03C2D12E8CD0073B16F /* Products */;
 			projectDirPath = "";
@@ -393,12 +402,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "step-tracker/step-tracker.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"step-tracker/Preview Content\"";
 				DEVELOPMENT_TEAM = MLPF7F86UY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "The app shows your step and weight data in an interactive chart.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The app allows you to add step and weight data to Apple Health.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -411,7 +424,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sawrose.step-tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -422,12 +437,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "step-tracker/step-tracker.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"step-tracker/Preview Content\"";
 				DEVELOPMENT_TEAM = MLPF7F86UY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "The app shows your step and weight data in an interactive chart.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The app allows you to add step and weight data to Apple Health.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -440,7 +459,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sawrose.step-tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -558,6 +579,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		37AC64182D58B95F005FDFAC /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		37AC64192D58B95F005FDFAC /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37AC64182D58B95F005FDFAC /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 37BBD0332D12E8CD0073B16F /* Project object */;
 }

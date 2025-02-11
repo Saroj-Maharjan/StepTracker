@@ -1,0 +1,121 @@
+//
+//  ContentView.swift
+//  step-tracker
+//
+//  Created by saroj maharjan on 18/12/2024.
+//
+
+import SwiftUI
+import Charts
+
+enum HealthMetricContext : CaseIterable, Identifiable {
+    case steps, weight
+    
+    var id: Self { self }
+    
+    var title: String {
+        switch self {
+        case .steps: return "Steps"
+        case .weight: return "Weight"
+        }
+    }
+    
+    var tintColor: Color {
+        switch self {
+        case .steps: return .pink
+        case .weight: return .indigo
+        }
+    }
+    
+    var fractionLength: Int {
+        switch self {
+        case .steps: 0
+        case .weight: 1
+        }
+    }
+    
+}
+
+struct DashboardView: View {
+    @Environment(HealthKitManager.self) private var hkManager
+    @Environment(HealthKitData.self) private var hkData
+    
+    @State private var isShowingPermissionPriming = false
+    @State private var selectedStat: HealthMetricContext = .steps
+    @State private var isPresentingHealthKitPermissionAlert: Bool = false
+    @State private var fetchError: STError = .noData
+    
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 20) {
+                    Picker("Selected Stat", selection: $selectedStat){
+                        ForEach(HealthMetricContext.allCases){
+                            Text($0.title)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    
+                    switch selectedStat {
+                    case .steps:
+                        StepBarChart(chartData: hkData.steps.chartData)
+                        
+                        StepPieChart(chartData: hkData.steps.averageWeekDayCountData)
+                    case .weight:
+                        WeightLineChart(chartData: hkData.weights.chartData)
+                        
+                        WeightBarChart(chartData: hkData.weights.averageDailyWeightDiffData)
+                    }
+                    
+                }
+            }
+            .padding()
+            .task { fetchHealthData() }
+            .navigationTitle("Dashboard")
+            .navigationDestination(for: HealthMetricContext.self) { metric in
+                HealthDataListView(metric: metric)
+            }
+            .fullScreenCover(isPresented: $isPresentingHealthKitPermissionAlert) {
+                fetchHealthData()
+            } content: {
+                HealthKitPermissionPrimingView()
+            }.alert(isPresented: $isPresentingHealthKitPermissionAlert, error: fetchError) { fetchError in
+                //Actions
+            } message: { fetchError in
+                Text(fetchError.failureReason)
+                
+            }
+        }
+        .tint(selectedStat.tintColor)
+    }
+    
+    
+    private func fetchHealthData() {
+        Task {
+            do {
+//                await hkManager.generateHealthData()
+                // Make this concurrent
+                async let steps = try await hkManager.fetchStepCount()
+                async let weights = hkManager.fetchWeights()
+                
+                hkData.steps = try await steps
+                hkData.weights = try await weights
+                
+            } catch STError.authNotDetermined {
+                isShowingPermissionPriming = true
+            } catch STError.noData {
+                fetchError = .noData
+                isPresentingHealthKitPermissionAlert = true
+            } catch {
+                fetchError = .unableToCompleteRequest
+                isPresentingHealthKitPermissionAlert = true
+            }
+        }
+    }
+}
+
+#Preview {
+    DashboardView()
+        .environment(HealthKitManager())
+        .environment(HealthKitData())
+}
